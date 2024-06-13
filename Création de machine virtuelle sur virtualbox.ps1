@@ -1,12 +1,29 @@
 # creer une machine virtuelle sur virtualbox avec powershell
 
-$Iso = 
+# Importer le module VirtualBox
+Import-Module VirtualBox
 
-Install-Module -Name VirtualBox
+# Creer une machine virtuelle
 
-New-VBoxVM -Name "NomDeLaMachineVirtuelle" -OSType "NomDeL'ISO" -MemorySize 2048 -Register
+$MountIso = "NomDeL'ISO"
+$VboxName = "NomDeLaMachineVirtuelle"
 
-Set-VBoxProperty -Name "NomDeLaMachineVirtuelle" -OSType "NomDeL'ISO" -MemorySize 2048 -Register
+New-VBoxVM -Name "$VboxName" -OSType "$MountIso" -MemorySize 2048 -Register
 
-Start-VBoxVM -Name "NomDeLaMachineVirtuelle"
+Set-VBoxProperty -Name "NomDeLaMachineVirtuelle" -OSType "$MountIso" -MemorySize 2048 -Register
 
+Start-VBoxVM -Name "$VboxName"
+
+# verifier le statut de la machine virtuelle
+
+Get-VBoxVM -Name "$VboxName"
+
+# Si vous souhaitez supprimer la machine virtuelle.
+# Decommenter la ligne #Remove-VBoxVM -Name "$VboxName"
+# Supprimer la machine virtuelle
+
+#Remove-VBoxVM -Name "$VboxName"
+
+# Deconnecter de virtualbox
+
+#Disconnect-VBox
